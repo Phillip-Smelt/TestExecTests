@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
-using ABT.Test.TestExecutive.SCPI_VISA_Instruments;
+using ABT.Test.TestExecutive.SCPI_VISA_Instruments.Multifunction;
 using ABT.Test.TestExecutive.Switching;
-using static ABT.Test.TestExecutive.SCPI_VISA_Instruments.MSMU_34980A;
+using static ABT.Test.TestExecutive.SCPI_VISA_Instruments.Multifunction.MSMU_34980A;
 using static ABT.Test.TestExecutive.SCPI_VISA_Instruments.SCPI_VISA_Instrument;
 
 namespace TestExecTests.SCPI_VISA_Instruments;
