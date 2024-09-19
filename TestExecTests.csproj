@@ -41,7 +41,6 @@
 
   <ItemGroup>
     <Folder Include="SCPI_VISA_Instruments\Oscilloscopes\" />
-    <Folder Include="SCPI_VISA_Instruments\PowerSupplies\Keysight\" />
   </ItemGroup>
 
 </Project>

@@ -8,10 +8,9 @@ using static ABT.Test.TestExecutive.SCPI_VISA_Instruments.SCPI_VISA_Instrument;
 namespace TestExecTests.SCPI_VISA_Instruments.Multifunction;
 
 [TestClass()]
-public class MSMU_34980ATests
-{
+public class MSMU_34980ATests {
 
-    internal static MSMU_34980A MSMU = new(new Alias("MSMU1"), "Agilent E3649A Dual Ouput DC Power Supply", "TCPIP0::10.25.32.13::INSTR", "MSMU_34980A");
+    internal static MSMU_34980A MSMU = new(new Alias("MSMU1"), "Agilent 34980A Multifunction Switch/Measure Unit", "TCPIP0::10.25.32.13::INSTR", "MSMU_34980A");
     internal const String FIRST_34921A = "@1001:1040";
     internal const String ALL_34921A = "@1001:5040";
     internal const String ABUS1 = "@1911,1921,2911,2921,3911,3921,4911,4921,5911,5921";
@@ -20,8 +19,7 @@ public class MSMU_34980ATests
     internal const String ABUS4 = "@1914,1924,2914,2924,3914,3924,4914,4924,5914,5924";
 
     [TestMethod()]
-    public void DiagnosticRelayCyclesTest()
-    {
+    public void DiagnosticRelayCyclesTest() {
         List<Int32> relayCycles;
         relayCycles = MSMU.DiagnosticRelayCycles(FIRST_34921A);
         Assert.AreEqual(40, relayCycles.Count);
@@ -30,20 +28,17 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void InstrumentDMM_InstalledTest()
-    {
+    public void InstrumentDMM_InstalledTest() {
         Assert.IsTrue(MSMU.InstrumentDMM_Installed());
     }
 
     [TestMethod()]
-    public void InstrumentDMM_GetTest()
-    {
+    public void InstrumentDMM_GetTest() {
         // Tested in InstrumentDMM_SetTest().
     }
 
     [TestMethod()]
-    public void InstrumentDMM_SetTest()
-    {
+    public void InstrumentDMM_SetTest() {
         MSMU.InstrumentDMM_Set(STATES.off);
         Assert.AreEqual(STATES.off, MSMU.InstrumentDMM_Get());
         MSMU.InstrumentDMM_Set(STATES.ON);
@@ -51,8 +46,7 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void ModuleChannelsTest()
-    {
+    public void ModuleChannelsTest() {
         Assert.AreEqual((1, 44), MSMU.ModuleChannels(SLOTS.Slot1));
         Assert.AreEqual((1, 44), MSMU.ModuleChannels(SLOTS.Slot2));
         Assert.AreEqual((1, 44), MSMU.ModuleChannels(SLOTS.Slot3));
@@ -64,8 +58,7 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void RouteCloseExclusiveTest()
-    {
+    public void RouteCloseExclusiveTest() {
         MSMU.Command(COMMANDS.RST); // Opens all relays.
         Assert.IsTrue(MSMU.RouteGet(FIRST_34921A, RELAY_STATES.opened));
         MSMU.RouteCloseExclusive("@1001:1005");
@@ -74,10 +67,8 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void RouteOpenABUS()
-    {
-        if (MessageBox.Show("Do you have Interlock enabled on Slots 1 through Slots 5?", "Interlock", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-        {
+    public void RouteOpenABUS() {
+        if (MessageBox.Show("Do you have Interlock enabled on Slots 1 through Slots 5?", "Interlock", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
             Assert.Inconclusive();
             return;
         }
@@ -125,8 +116,7 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void RouteOpenAllSlotTest()
-    {
+    public void RouteOpenAllSlotTest() {
         MSMU.RouteSet(ALL_34921A, RELAY_STATES.CLOSED);
         Assert.IsTrue(MSMU.RouteGet(ALL_34921A, RELAY_STATES.CLOSED));
         MSMU.RouteOpenAllSlot(SLOTS.Slot1);
@@ -135,8 +125,7 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void RouteOpenAllTest()
-    {
+    public void RouteOpenAllTest() {
         MSMU.RouteSet(ALL_34921A, RELAY_STATES.CLOSED);
         Assert.IsTrue(MSMU.RouteGet(ALL_34921A, RELAY_STATES.CLOSED));
         MSMU.RouteOpenAll();
@@ -144,8 +133,7 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void RouteGetTest()
-    {
+    public void RouteGetTest() {
         MSMU.RouteSet(ALL_34921A, RELAY_STATES.opened);
         Assert.IsTrue(MSMU.RouteGet(ALL_34921A, RELAY_STATES.opened));
 
@@ -158,20 +146,17 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void RouteSetTest()
-    {
+    public void RouteSetTest() {
         // Tested in RouteGetTest().
     }
 
     [TestMethod()]
-    public void SystemABusInterlockSimulateGetTest()
-    {
+    public void SystemABusInterlockSimulateGetTest() {
         // Tested in SystemABusInterlockSimulateSetTest().
     }
 
     [TestMethod()]
-    public void SystemABusInterlockSimulateSetTest()
-    {
+    public void SystemABusInterlockSimulateSetTest() {
         MSMU.SystemABusInterlockSimulateSet(STATES.ON);
         Assert.AreEqual(STATES.ON, MSMU.SystemABusInterlockSimulateGet());
         MSMU.SystemABusInterlockSimulateSet(STATES.off);
@@ -179,14 +164,12 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void SystemDateGetTest()
-    {
+    public void SystemDateGetTest() {
         // Tested in SystemDateSetTest().
     }
 
     [TestMethod()]
-    public void SystemDateSetTest()
-    {
+    public void SystemDateSetTest() {
         DateOnly dset = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
         MSMU.SystemDateSet(dset);
         DateOnly dget = MSMU.SystemDateGet();
@@ -195,8 +178,7 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void SystemDescriptionLongTest()
-    {
+    public void SystemDescriptionLongTest() {
         Assert.AreEqual("40-Channel Armature Multiplexer with Low Thermal Offset", MSMU.SystemDescriptionLong(SLOTS.Slot1));
         Assert.AreEqual("40-Channel Armature Multiplexer with Low Thermal Offset", MSMU.SystemDescriptionLong(SLOTS.Slot2));
         Assert.AreEqual("40-Channel Armature Multiplexer with Low Thermal Offset", MSMU.SystemDescriptionLong(SLOTS.Slot3));
@@ -208,15 +190,13 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void SystemModuleTemperatureTest()
-    {
+    public void SystemModuleTemperatureTest() {
         Assert.IsInstanceOfType(MSMU.SystemModuleTemperature(SLOTS.Slot6), typeof(Double));                                 // SLOTS.Slot6 & Slot7 are valid 34939A modules.
         Assert.IsTrue(18 <= MSMU.SystemModuleTemperature(SLOTS.Slot7) && MSMU.SystemModuleTemperature(SLOTS.Slot7) <= 30);  // Degrees Centigrade.
     }
 
     [TestMethod()]
-    public void SystemPresetTest()
-    {
+    public void SystemPresetTest() {
         MSMU.RouteSet(FIRST_34921A, RELAY_STATES.CLOSED);
         Assert.IsTrue(MSMU.RouteGet(FIRST_34921A, RELAY_STATES.CLOSED));
         MSMU.SystemPreset();
@@ -224,14 +204,12 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void SystemTimeGetTest()
-    {
+    public void SystemTimeGetTest() {
         // Tested in SystemTimeSetTest().
     }
 
     [TestMethod()]
-    public void SystemTimeSetTest()
-    {
+    public void SystemTimeSetTest() {
         TimeOnly tset = new(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
         MSMU.SystemTimeSet(tset);
         TimeOnly tget = MSMU.SystemTimeGet();
@@ -240,8 +218,7 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void SystemTypeTest()
-    {
+    public void SystemTypeTest() {
         Assert.AreEqual("34921A", MSMU.SystemType(SLOTS.Slot1));
         Assert.AreEqual("34921A", MSMU.SystemType(SLOTS.Slot2));
         Assert.AreEqual("34921A", MSMU.SystemType(SLOTS.Slot3));
@@ -253,14 +230,12 @@ public class MSMU_34980ATests
     }
 
     [TestMethod()]
-    public void UnitsGetTest()
-    {
+    public void UnitsGetTest() {
         // Tested in UnitsGetTest().
     }
 
     [TestMethod()]
-    public void UnitsSetTest()
-    {
+    public void UnitsSetTest() {
         MSMU.UnitsSet(TEMPERATURE_UNITS.C);
         Assert.AreEqual(TEMPERATURE_UNITS.C, MSMU.UnitsGet());
         MSMU.UnitsSet(TEMPERATURE_UNITS.F);
